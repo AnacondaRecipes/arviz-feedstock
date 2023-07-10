@@ -1,5 +1,5 @@
 {% set name = "arviz" %}
-{% set version = "0.11.2" %}
+{% set version = "0.15.1" %}
 
 package:
   name: {{ name|lower }}
@@ -11,21 +11,25 @@ source:
 build:
   noarch: python
   number: 0
-  script: {{ PYTHON }} -m pip install . --no-deps -vv
+  skip: True  # [py<=2.7]
+  script: {{ PYTHON }} -m pip install . --no-deps -vv --no-deps --no-build-isolation
 
 requirements:
   host:
-    - python >=3
+    - python
     - pip
+    - setuptools
   run:
-    - python >=3
-    - matplotlib-base >=3.0
-    - numpy
+    - python
+    - matplotlib-base >=3.2
+    - numpy {{ numpy }}
     - scipy
     - pandas
     - xarray
     - netcdf4
     - packaging
+    - typing_extensions
+    - xarray-einstats >=0.3
 
 test:
   imports:
