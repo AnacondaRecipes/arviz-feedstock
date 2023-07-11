@@ -21,7 +21,7 @@ requirements:
     - python
     - pip
     - setuptools
-    - wheels
+    - wheel
   run:
     - matplotlib-base >=3.2
     - numpy {{ pin_compatible('numpy') }}
