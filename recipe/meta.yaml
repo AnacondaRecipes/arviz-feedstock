@@ -34,6 +34,10 @@ requirements:
 test:
   imports:
     - arviz
+  requires:
+    - pip
+  commands:
+    - pip check
 
 about:
   home: https://github.com/arviz-devs/arviz
