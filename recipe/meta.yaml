@@ -11,6 +11,8 @@ source:
 build:
   noarch: python
   number: 0
+  # skipping 3.8 because of missing xarray-einstats for 3.8
+  skip: True  # [py==3.8]
   skip: True  # [py<=2.7]
   script: {{ PYTHON }} -m pip install . --no-deps -vv --no-deps --no-build-isolation
 
