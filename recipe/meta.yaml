@@ -23,6 +23,7 @@ requirements:
     - setuptools
     - wheel
   run:
+    - python
     - matplotlib-base >=3.2
     - numpy >=1.20.0
     - scipy >=1.8.0
