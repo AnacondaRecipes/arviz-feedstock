@@ -9,7 +9,6 @@ source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 981cce0282bdf6f3b379255b95a440979f9a0ef0ae9dd88a54f763cf5b31484c
 build:
-  noarch: python
   number: 0
   # skipping 3.8 because of missing xarray-einstats for 3.8
   skip: True  # [py==3.8]
