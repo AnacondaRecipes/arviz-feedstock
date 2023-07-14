@@ -11,7 +11,7 @@ source:
 build:
   number: 0
   # skipping 3.8 because of missing xarray-einstats for 3.8
-  skip: True  # [py<=2.7]
+  skip: True  # [py<39]
   script: {{ PYTHON }} -m pip install . --no-deps -vv --no-deps --no-build-isolation
 
 requirements:
