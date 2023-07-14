@@ -10,9 +10,8 @@ source:
   sha256: 981cce0282bdf6f3b379255b95a440979f9a0ef0ae9dd88a54f763cf5b31484c
 build:
   number: 0
-  # skipping 3.8 because of missing xarray-einstats for 3.8
   skip: True  # [py<39]
-  script: {{ PYTHON }} -m pip install . --no-deps -vv --no-deps --no-build-isolation
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
