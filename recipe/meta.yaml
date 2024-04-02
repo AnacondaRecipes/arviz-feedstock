@@ -42,14 +42,10 @@ test:
     - pytest
     - pytest-cov
     - cloudpickle
-    - numba  # [not s390x]
-    - netcdf4  # [not s390x]
     - bokeh >=1.4.0
     - contourpy
     - ujson
     - dask
-    - zarr >=2.5.0  # [not s390x]
-    - xarray
   commands:
     - pip check
     - pytest arviz/tests --ignore="arviz/tests/external_tests" -k "not (test_io_function or test_io_method or test_warning_rc_file or test_bad_rc_file or test_deterministic or test_empty_inference_data_object or test_rctemplate_updated or test_rc_context_file)"
