@@ -42,13 +42,13 @@ test:
     - pytest
     - pytest-cov
     - cloudpickle
-    - numba
-    - netcdf4
+    - numba  # [not s390x]
+    - netcdf4  # [not s390x]
     - bokeh >=1.4.0
     - contourpy
     - ujson
     - dask
-    - zarr >=2.5.0
+    - zarr >=2.5.0  # [not s390x]
     - xarray
   commands:
     - pip check
