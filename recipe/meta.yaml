@@ -46,7 +46,7 @@ test:
   commands:
     - pip check
     - pytest arviz/tests --ignore="arviz/tests/external_tests" -k "not (test_io_function or test_io_method or test_warning_rc_file or test_bad_rc_file or test_deterministic or test_empty_inference_data_object or test_rctemplate_updated or test_rc_context_file)"  # [not win]
-    - pytest arviz/tests --ignore="arviz/tests/external_tests" --ignore="arviz/tests/base_tests/test_plots_bokeh.py" --ignore="arviz/tests/base_tests/test_plots_matplotlib.py -k "not (test_io_function or test_io_method or test_warning_rc_file or test_bad_rc_file or test_deterministic or test_empty_inference_data_object or test_rctemplate_updated or test_rc_context_file or test_plot_forest_single_value or test_plot_density_discrete_combinedims or test_plot_violin or test_plot_density_float)"  # [win]
+    - pytest arviz/tests --ignore="arviz/tests/external_tests" --ignore="arviz/tests/base_tests/test_plots_bokeh.py" --ignore="arviz/tests/base_tests/test_plots_matplotlib.py" -k "not (test_io_function or test_io_method or test_warning_rc_file or test_bad_rc_file or test_deterministic or test_empty_inference_data_object or test_rctemplate_updated or test_rc_context_file or test_plot_forest_single_value or test_plot_density_discrete_combinedims or test_plot_violin or test_plot_density_float)"  # [win]
 
 about:
   home: https://github.com/arviz-devs/arviz
