@@ -1,5 +1,5 @@
 {% set name = "arviz" %}
-{% set version = "0.17.1" %}
+{% set version = "0.21.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,11 +7,11 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: b46dc693e34fd3dff20d824234c7a01cb04b1b536441e285218c54fab42c3c09
+  sha256: ad5c99b998b750e585bdd1f3ba11e3f8729e01d06dc7fdc251450039e88cfd71
 
 build:
   number: 0
-  skip: True  # [py<39]
+  skip: True  # [py<310]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
@@ -23,14 +23,20 @@ requirements:
   run:
     - python
     - matplotlib-base >=3.5
-    - numpy >=1.22.0,<2.0
-    - scipy >=1.8.0
-    - pandas >=1.4.0
-    - xarray >=0.21.0
+    - numpy >=1.23.0
+    - scipy >=1.9.0
+    - pandas >=1.5.0
+    - xarray >=2022.6.0
     - h5netcdf >=1.0.2
     - packaging
     - typing_extensions >=4.1.0
+    - setuptools >=60.0.0
+    - typing-extensions >=4.1.0
     - xarray-einstats >=0.3
+  run_constrained:
+    - bokeh >=3 # extra:all
+    - zarr >=2.5.0,<3 # extra:all
+    - dm-tree >=0.1.8 # extra:all
 
 test:
   source_files:
