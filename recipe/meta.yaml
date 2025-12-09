@@ -1,17 +1,17 @@
 {% set name = "arviz" %}
-{% set version = "0.21.0" %}
+{% set version = "0.22.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: ad5c99b998b750e585bdd1f3ba11e3f8729e01d06dc7fdc251450039e88cfd71
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: d9df7592f1ce77ce69f7504dba13f8d550204c49c23e54849861dbcb2c640954
 
 build:
   number: 0
-  skip: True  # [py<310]
+  skip: true  # [py<310]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
@@ -22,11 +22,11 @@ requirements:
     - wheel
   run:
     - python
-    - matplotlib-base >=3.5
-    - numpy >=1.23.0
-    - scipy >=1.9.0
-    - pandas >=1.5.0
-    - xarray >=2022.6.0
+    - matplotlib-base >=3.8
+    - numpy >=1.26.0
+    - scipy >=1.11.0
+    - pandas >=2.1.0
+    - xarray >=2023.7.0
     - h5netcdf >=1.0.2
     - packaging
     - typing_extensions >=4.1.0
@@ -34,9 +34,10 @@ requirements:
     - typing-extensions >=4.1.0
     - xarray-einstats >=0.3
   run_constrained:
-    - bokeh >=3 # extra:all
-    - zarr >=2.5.0,<3 # extra:all
-    - dm-tree >=0.1.8 # extra:all
+    - bokeh >=3
+    - zarr >=2.5.0,<3
+    - dm-tree >=0.1.8
+    - xarray >=2024.11.0
 
 test:
   source_files:
@@ -60,7 +61,6 @@ about:
   license_family: Apache
   license_file: LICENSE
   summary: Exploratory analysis of Bayesian models with Python
-
   description: |
     ArviZ (pronounced "AR-vees") is a Python package for exploratory analysis
     of Bayesian models. Includes functions for posterior analysis, model
