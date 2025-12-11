@@ -1,18 +1,18 @@
 {% set name = "arviz" %}
-{% set version = "0.21.0" %}
+{% set version = "0.22.0" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: ad5c99b998b750e585bdd1f3ba11e3f8729e01d06dc7fdc251450039e88cfd71
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: d9df7592f1ce77ce69f7504dba13f8d550204c49c23e54849861dbcb2c640954
 
 build:
   number: 0
-  skip: True  # [py<310]
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  skip: true  # [py<310]
 
 requirements:
   host:
@@ -22,37 +22,54 @@ requirements:
     - wheel
   run:
     - python
-    - matplotlib-base >=3.5
-    - numpy >=1.23.0
-    - scipy >=1.9.0
-    - pandas >=1.5.0
-    - xarray >=2022.6.0
-    - h5netcdf >=1.0.2
+    - matplotlib-base >=3.8
+    - numpy >=1.26.0
+    - scipy >=1.11.0
     - packaging
+    - pandas >=2.1.0
+    - xarray >=2023.7.0
+    - h5netcdf >=1.0.2
     - typing_extensions >=4.1.0
-    - setuptools >=60.0.0
-    - typing-extensions >=4.1.0
     - xarray-einstats >=0.3
   run_constrained:
-    - bokeh >=3 # extra:all
-    - zarr >=2.5.0,<3 # extra:all
-    - dm-tree >=0.1.8 # extra:all
+    - bokeh >=3
+    - zarr >=2.5.0,<3
+    - xarray >=2024.11.0
+    - dm-tree >=0.1.8
 
+# Test examples not in the sp_dir:
+# E   FileNotFoundError: [Errno 2] No such file or directory: '$PREFIX/lib/python3.10/site-packages/arviz/tests/base_tests/../test.rcparams'
+{% set deselect_tests = " --deselect=test_plots_matplotlib.py" %}
+# E   FileNotFoundError: [Errno 2] Unable to synchronously create file 
+# (unable to open file: name = '$PREFIX/lib/python3.10/site-packages/arviz/tests/saved_models/io_function_testfile.nc', errno = 2, error message = 'No such file or directory', flags = 13, o_flags = 602)
+{% set deselect_tests = deselect_tests + " --deselect=test_data.py::TestDataNetCDF::test_io_function" %}
+# E   FileNotFoundError: [Errno 2] Unable to synchronously create file 
+# (unable to open file: name = '$PREFIX/lib/python3.10/site-packages/arviz/tests/saved_models/io_method_testfile.nc', errno = 2, error message = 'No such file or directory', flags = 13, o_flags = 602)
+{% set deselect_tests = deselect_tests + " --deselect=test_data.py::TestDataNetCDF::test_io_method" %}
+{% set deselect_tests = deselect_tests + " --deselect=test_data.py::TestDataNetCDF::test_empty_inference_data_object" %}
+# E   FileNotFoundError: [Errno 2] No such file or directory: '$PREFIX/lib/python3.10/site-packages/arviz/tests/base_tests/../saved_models/stan_diagnostics/blocker.[0-9].csv'
+{% set deselect_tests = deselect_tests + " --deselect=test_diagnostics.py::TestDiagnostics::test_deterministic" %}
+# E   FileNotFoundError: [Errno 2] No such file or directory: '$PREFIX/lib/python3.10/site-packages/arviz/tests/base_tests/../test.rcparams'
+{% set deselect_tests = deselect_tests + " --deselect=test_rcparams.py::test_rc_context_file" %}
+# E   FileNotFoundError: [Errno 2] No such file or directory: '$PREFIX/lib/python3.10/site-packages/arviz/tests/base_tests/../bad.rcparams'
+{% set deselect_tests = deselect_tests + " --deselect=test_rcparams.py::test_bad_rc_file" %}
+# E   FileNotFoundError: [Errno 2] No such file or directory: '$PREFIX/lib/python3.10/site-packages/arviz/tests/base_tests/../../../arvizrc.template'
+{% set deselect_tests = deselect_tests + " --deselect=test_rcparams.py::test_warning_rc_file" %}
+{% set deselect_tests = deselect_tests + " --deselect=test_rcparams.py::test_rctemplate_updated" %}
 test:
   source_files:
     - arviz
   imports:
     - arviz
+  commands:
+    - pip check
+    - pytest --pyargs arviz.tests.base_tests {{ deselect_tests }}
   requires:
     - pip
     - pytest
     - pytest-cov
     - cloudpickle
-    - bokeh >=1.4.0
-  commands:
-    - pip check
-    - pytest arviz/tests --ignore="arviz/tests/external_tests" -k "not (test_io_function or test_io_method or test_warning_rc_file or test_bad_rc_file or test_deterministic or test_empty_inference_data_object or test_rctemplate_updated or test_rc_context_file or test_plot_trace_legend or test_plot_ppc_transposed)"  # [not win]
-    - pytest arviz/tests --ignore="arviz/tests/external_tests" --ignore="arviz/tests/base_tests/test_plots_bokeh.py" --ignore="arviz/tests/base_tests/test_plots_matplotlib.py" -k "not (test_io_function or test_io_method or test_warning_rc_file or test_bad_rc_file or test_deterministic or test_empty_inference_data_object or test_rctemplate_updated or test_rc_context_file or test_plot_forest_single_value or test_plot_density_discrete_combinedims or test_plot_violin or test_plot_density_float)"  # [win]
+    - bokeh >=3
 
 about:
   home: https://github.com/arviz-devs/arviz
