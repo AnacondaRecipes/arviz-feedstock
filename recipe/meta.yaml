@@ -26,7 +26,7 @@ requirements:
     # arviz-stats[xarray]>=1.1,<1.2: xarray-einstats", "xarray>=2024.11.0"
     # see https://github.com/arviz-devs/arviz-stats/blob/v1.1.0/pyproject.toml#L43-L47
     - xarray-einstats >=0.9.1,<0.10.0
-    - xarray >=2024.11.0,<2025.0.0
+    - xarray >=2024.11.0
     - arviz-plots >=1.1.0,<1.2.0
     - matplotlib-base >=3.9
 
