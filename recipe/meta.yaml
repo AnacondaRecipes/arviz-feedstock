@@ -1,5 +1,5 @@
 {% set name = "arviz" %}
-{% set version = "0.23.4" %}
+{% set version = "1.1.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,86 +7,48 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 611be826995066036c9443ea98d11486c279ef3da3b6cdc5c0816fab434115b9
+  sha256: 7172c60980d47a93c3ff29be554fbeba33287e8aea88082956386b82cf995f1b
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true  # [py<310]
+  skip: true  # [py<312]
 
 requirements:
   host:
     - python
     - pip
-    - setuptools >=60.0.0
-    - wheel
+    - flit-core >=3.4,<4
   run:
     - python
-    - matplotlib-base >=3.8
-    - numpy >=1.26.0
-    - scipy >=1.11.0
-    - packaging
-    - setuptools
-    - pandas >=2.1.0
-    - xarray >=2023.7.0
-    - h5netcdf >=1.0.2
-    - h5py
-    - typing_extensions >=4.1.0
-    - xarray-einstats >=0.3
-    - platformdirs
-  run_constrained:
-    - bokeh >=3
-    - zarr >=2.5.0,<3
+    - arviz-base >=1.1.0,<1.2.0
+    - arviz-stats >=1.1.0,<1.2.0
+    # arviz-stats[xarray]>=1.1,<1.2: xarray-einstats", "xarray>=2024.11.0"
+    # see https://github.com/arviz-devs/arviz-stats/blob/v1.1.0/pyproject.toml#L43-L47
+    - xarray-einstats >=0.9.1,<0.10.0
     - xarray >=2024.11.0
-    - dm-tree >=0.1.8
+    - arviz-plots >=1.1.0,<1.2.0
+    - matplotlib-base >=3.9
 
-# Test examples not in the sp_dir:
-# E   FileNotFoundError: [Errno 2] No such file or directory: '$PREFIX/lib/python3.10/site-packages/arviz/tests/base_tests/../test.rcparams'
-{% set deselect_tests = " --deselect=test_plots_matplotlib.py" %}
-# E   FileNotFoundError: [Errno 2] Unable to synchronously create file 
-# (unable to open file: name = '$PREFIX/lib/python3.10/site-packages/arviz/tests/saved_models/io_function_testfile.nc', errno = 2, error message = 'No such file or directory', flags = 13, o_flags = 602)
-{% set deselect_tests = deselect_tests + " --deselect=test_data.py::TestDataNetCDF::test_io_function" %}
-# E   FileNotFoundError: [Errno 2] Unable to synchronously create file 
-# (unable to open file: name = '$PREFIX/lib/python3.10/site-packages/arviz/tests/saved_models/io_method_testfile.nc', errno = 2, error message = 'No such file or directory', flags = 13, o_flags = 602)
-{% set deselect_tests = deselect_tests + " --deselect=test_data.py::TestDataNetCDF::test_io_method" %}
-{% set deselect_tests = deselect_tests + " --deselect=test_data.py::TestDataNetCDF::test_empty_inference_data_object" %}
-# E   FileNotFoundError: [Errno 2] No such file or directory: '$PREFIX/lib/python3.10/site-packages/arviz/tests/base_tests/../saved_models/stan_diagnostics/blocker.[0-9].csv'
-{% set deselect_tests = deselect_tests + " --deselect=test_diagnostics.py::TestDiagnostics::test_deterministic" %}
-# E   FileNotFoundError: [Errno 2] No such file or directory: '$PREFIX/lib/python3.10/site-packages/arviz/tests/base_tests/../test.rcparams'
-{% set deselect_tests = deselect_tests + " --deselect=test_rcparams.py::test_rc_context_file" %}
-# E   FileNotFoundError: [Errno 2] No such file or directory: '$PREFIX/lib/python3.10/site-packages/arviz/tests/base_tests/../bad.rcparams'
-{% set deselect_tests = deselect_tests + " --deselect=test_rcparams.py::test_bad_rc_file" %}
-# E   FileNotFoundError: [Errno 2] No such file or directory: '$PREFIX/lib/python3.10/site-packages/arviz/tests/base_tests/../../../arvizrc.template'
-{% set deselect_tests = deselect_tests + " --deselect=test_rcparams.py::test_warning_rc_file" %}
-{% set deselect_tests = deselect_tests + " --deselect=test_rcparams.py::test_rctemplate_updated" %}
 test:
-  source_files:
-    - arviz
   imports:
     - arviz
   commands:
     - pip check
-    - pytest --pyargs arviz.tests.base_tests {{ deselect_tests }}
   requires:
     - pip
-    - pytest
-    - pytest-cov
-    - cloudpickle
-    - bokeh >=3
 
 about:
-  home: https://github.com/arviz-devs/arviz
+  home: https://python.arviz.org
   license: Apache-2.0
   license_family: Apache
   license_file: LICENSE
   summary: Exploratory analysis of Bayesian models with Python
-
   description: |
     ArviZ (pronounced "AR-vees") is a Python package for exploratory analysis
     of Bayesian models. Includes functions for posterior analysis, model
     checking, comparison and diagnostics.
-
-  doc_url: https://arviz-devs.github.io/arviz/index.html
+  doc_url: https://python.arviz.org
   dev_url: https://github.com/arviz-devs/arviz
 
 extra:
