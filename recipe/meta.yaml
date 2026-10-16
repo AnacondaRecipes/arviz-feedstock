@@ -29,6 +29,8 @@ requirements:
     - xarray >=2024.11.0
     - arviz-plots >=1.3.0,<1.4.0
   run_constrained:
+    # optional plotting extras: arviz[matplotlib|bokeh|plotly] delegate to arviz_plots extras (matplotlib>=3.9, bokeh>=3.4, plotly>=5.19)
+    # see https://github.com/arviz-devs/arviz/blob/v1.3.0/pyproject.toml#L47-L49
     - matplotlib-base >=3.9
     - bokeh >=3.4
     - plotly >=5.19
