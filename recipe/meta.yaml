@@ -2,7 +2,7 @@
 {% set version = "1.3.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
@@ -29,10 +29,6 @@ requirements:
     - xarray >=2024.11.0
     - arviz-plots >=1.3.0,<1.4.0
   run_constrained:
-    # optional extras
-    - netcdf4
-    - h5netcdf
-    - zarr
     - matplotlib-base >=3.9
     - bokeh >=3.4
     - plotly >=5.19
